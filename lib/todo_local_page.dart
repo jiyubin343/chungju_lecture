@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class TodoLocalPage extends StatefulWidget {
@@ -26,8 +27,8 @@ class _TodoLocalPageState extends State<TodoLocalPage> {
         _todos.add(text);
         _controller.clear();
       });
-      _saveTodos();
     }
+    _saveTodos();
   }
 
   Future<void> _saveTodos() async {
@@ -37,10 +38,10 @@ class _TodoLocalPageState extends State<TodoLocalPage> {
 
   Future<void> _loadTodos() async {
     final prefs = await SharedPreferences.getInstance();
-    await savedList = prefs.setStringList('todos') ?? [];
+    final savedList = prefs.getStringList('todos') ?? [];
     setState(() {
       _todos.addAll(savedList);
-    });;
+    });
   }
 
   void _deleteTodo(int index){
